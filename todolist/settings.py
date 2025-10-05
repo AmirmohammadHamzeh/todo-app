@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'authentication.apps.AuthConfig',
-    'drf_yasg'
+    'drf_yasg',
+    "todos.apps.TodosConfig"
 
 ]
 
