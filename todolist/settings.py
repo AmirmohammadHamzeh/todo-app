@@ -10,19 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from datetime import timedelta
+import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+=4e$5muxs37j&!_njpod*^=+e_*(tobvadfa=tn4qeirqsgxs'
+
+SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = []
 CORS_ALLOW_ALL_ORIGINS = True
@@ -79,14 +80,15 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'todo_db',
-        'USER': 'todo_user',
-        'PASSWORD': 'todo_pass',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'todo_db'),
+        'USER': os.getenv('DB_USER', 'todo_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'todo_pass'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
