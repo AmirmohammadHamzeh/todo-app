@@ -4,6 +4,13 @@ from django.db import models
 from django.conf import settings
 
 
+class Label(models.Model):
+    name = models.CharField(max_length=50, db_index=True, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Todo(models.Model):
     PRIORITY_CHOICES = [
         ('low', 'Low'),
@@ -21,6 +28,7 @@ class Todo(models.Model):
     is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    labels = models.ManyToManyField(Label, related_name='todos', blank=True)
 
     def __str__(self):
         return self.title

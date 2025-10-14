@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
-from .models import Todo
-from .serializers import TodoSerializer
+from .models import Todo, Label
+from .serializers import TodoSerializer, LabelSerializer
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -22,7 +22,7 @@ class TodoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):
-            return Todo.objects.none()  # برای Swagger schema
+            return Todo.objects.none()
         return Todo.objects.filter(user=self.request.user)
 
 
@@ -58,3 +58,15 @@ class TodoSearchView(generics.ListAPIView):
                 rank=SearchRank(search_vector, search_query)
             ).filter(rank__gte=0.1).order_by('-rank', 'created_at')
         return Todo.objects.none()
+
+
+class LabelListCreateView(generics.ListCreateAPIView):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class LabelRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+    permission_classes = [permissions.IsAuthenticated]
