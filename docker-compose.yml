@@ -1,6 +1,6 @@
 services:
   web:
-    build: ../../Downloads
+    build: .
     container_name: todolist_backend
     command: gunicorn todolist.wsgi:application --bind 0.0.0.0:8000
     volumes:
