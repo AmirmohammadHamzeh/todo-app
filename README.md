@@ -96,8 +96,8 @@ Docs: Swagger / Redoc
 ## ⚙️ Installation
 
 ``` bash
-git clone <YOUR_REPO_URL>
-cd <YOUR_PROJECT_NAME>
+git clone https://github.com/AmirmohammadHamzeh/todo-app.git
+cd todo-app
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
